@@ -86,7 +86,9 @@
 /* ── Standalone grid ─────────────────────────────────── */
 .projects__standalone {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    align-items: stretch;
     gap: 1.25rem;
 }
 
@@ -154,6 +156,12 @@
 }
 
 /* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .projects__standalone {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .projects__group-cards {
         grid-template-columns: 1fr;

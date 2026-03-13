@@ -68,6 +68,13 @@ const LINKED_GROUPS = [
 
 const STANDALONE = [
     {
+        title: 'Deep Researcher',
+        description: 'Autonomous multi-agent research system built with LangChain and LangGraph. Takes a natural language query and produces a fully cited, structured research report with no human intervention — powered by four specialized agents: a Manager, Search Agent, Writer Agent, and a Critique Agent that fact-checks claims via live web search before accepting the draft.',
+        tags: ['Python', 'LangChain', 'LangGraph', 'Gemini API', 'Tavily', 'arXiv'],
+        icon: <i className="fa-solid fa-robot"></i>,
+        github: 'https://github.com/genocidalfruit/deep-researcher',
+    },
+    {
         title: 'Network Intrusion Detection System',
         description: 'Distributed security framework using a Generative Transformer to synthesize attack data and solve class imbalance. A central server manages global model training and distributes quantized models to edge nodes for low-latency threat detection.',
         tags: ['PyTorch', 'Python', 'Transformers', 'Scipy', 'Socket Programming'],
