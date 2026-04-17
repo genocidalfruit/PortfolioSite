@@ -4,15 +4,17 @@ import './Hero.css';
 const ROLES = ['Full-Stack Developer', 'ML & Data Enthusiast', 'Quant Finance Builder', 'AI App Developer'];
 
 const QUICK_LINKS = [
-    { icon: <i className="fa-solid fa-user"></i>, label: 'About', count: 'My story', href: '#about' },
-    { icon: <i className="fa-solid fa-folder-open"></i>, label: 'Projects', count: '8 featured', href: '#projects' },
-    { icon: <i className="fa-solid fa-envelope"></i>, label: 'Contact', count: 'Get in touch', href: '#contact' },
+    { icon: <i className="fa-solid fa-user" style={{ color: 'white' }}></i>, label: 'About', count: 'Who I Am', href: '#about' },
+    { icon: <i className="fa-solid fa-folder-open" style={{ color: 'white' }}></i>, label: 'Projects', count: 'Featured Work', href: '#projects' },
+    { icon: <i className="fa-solid fa-envelope" style={{ color: 'white' }}></i>, label: 'Contact', count: 'Get in touch', href: '#contact' },
+    { icon: <i className="fa-solid fa-file" style={{ color: 'white' }}></i>, label: 'Resume', count: 'View Resume', isResume: true },
 ];
 
 export default function Hero() {
     const [roleIndex, setRoleIndex] = useState(0);
     const [displayed, setDisplayed] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
+    const [showResume, setShowResume] = useState(false);
 
     useEffect(() => {
         const currentRole = ROLES[roleIndex];
@@ -57,22 +59,38 @@ export default function Hero() {
                         <h3 className="hero__card-title">Quick Navigation</h3>
                         <div className="hero__card-links">
                             {QUICK_LINKS.map((link) => (
-                                <a key={link.label} href={link.href} className="hero__card-link">
-                                    <span className="hero__card-link-icon">{link.icon}</span>
-                                    <div className="hero__card-link-info">
-                                        <span className="hero__card-link-label">{link.label}</span>
-                                        <span className="hero__card-link-count">{link.count}</span>
-                                    </div>
-                                    <span className="hero__card-link-arrow">›</span>
-                                </a>
+                                link.isResume ? (
+                                    <button key={link.label} className="hero__card-link" onClick={() => setShowResume(true)}>
+                                        <span className="hero__card-link-icon">{link.icon}</span>
+                                        <div className="hero__card-link-info">
+                                            <span className="hero__card-link-label">{link.label}</span>
+                                            <span className="hero__card-link-count">{link.count}</span>
+                                        </div>
+                                        <span className="hero__card-link-arrow">›</span>
+                                    </button>
+                                ) : (
+                                    <a key={link.label} href={link.href} className="hero__card-link">
+                                        <span className="hero__card-link-icon">{link.icon}</span>
+                                        <div className="hero__card-link-info">
+                                            <span className="hero__card-link-label">{link.label}</span>
+                                            <span className="hero__card-link-count">{link.count}</span>
+                                        </div>
+                                        <span className="hero__card-link-arrow">›</span>
+                                    </a>
+                                )
                             ))}
                         </div>
-                        <a href="#about" className="hero__card-footer">
-                            Learn More About Me →
-                        </a>
                     </div>
                 </div>
             </div>
+            {showResume && (
+                <div className="resume-modal" onClick={() => setShowResume(false)}>
+                    <div className="resume-modal__content" onClick={(e) => e.stopPropagation()}>
+                        <button className="resume-modal__close" onClick={() => setShowResume(false)}>×</button>
+                        <iframe src="/assets/SDE.pdf" title="Resume" />
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

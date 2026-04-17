@@ -3,6 +3,8 @@
     display: flex;
     align-items: center;
     padding: 6rem 0 4rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero__inner {
@@ -70,8 +72,7 @@
 
 /* ===== Sidebar Card (vault-front style) ===== */
 .hero__card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
+    background: rgba(25, 25, 30, 0.7);
     border-radius: var(--radius-md);
     overflow: hidden;
 }
@@ -142,6 +143,61 @@
     color: var(--accent-blue);
 }
 
+.hero__card-link {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+.resume-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.resume-modal__content {
+    background: #fff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 1000px;
+    height: 95vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.resume-modal__content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.resume-modal__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: none;
+    background: #333;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .hero__card-footer {
     display: block;
     padding: 1rem 1.5rem;
@@ -165,7 +221,7 @@
 
     .hero__inner {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 1.5rem;
     }
 
     .hero__sidebar {

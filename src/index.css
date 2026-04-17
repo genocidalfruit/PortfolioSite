@@ -49,15 +49,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== Dot Grid Background ===== */
-body::before {
-  content: '';
+/* ===== App Background (Ascii Smoke) ===== */
+.app-background {
   position: fixed;
-  inset: 0;
-  z-index: -2;
-  background-image: radial-gradient(circle, rgba(84, 84, 109, 0.25) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
 }
 
 /* ===== Edge Glow ===== */
@@ -143,7 +142,6 @@ a:hover {
 /* ===== Card ===== */
 .card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 1.5rem;
   transition: all var(--transition-base);

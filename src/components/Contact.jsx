@@ -2,30 +2,23 @@ import './Contact.css';
 
 const LINKS = [
     {
-        icon: <i className="fa-solid fa-envelope"></i>,
+        icon: <i className="fa-solid fa-envelope" style={{ color: 'white' }}></i>,
         label: 'Email',
-        value: 'you@example.com',
-        href: 'mailto:you@example.com',
+        value: 'karanthanshul@gmail.com',
+        href: 'mailto:karanthanshul@gmail.com',
     },
     {
-        icon: <i className="fa-brands fa-github"></i>,
+        icon: <i className="fa-brands fa-github" style={{ color: 'white' }}></i>,
         label: 'GitHub',
-        value: 'github.com/yourname',
-        href: 'https://github.com/yourname',
+        value: 'github.com/genocidalfruit',
+        href: 'https://github.com/genocidalfruit',
         external: true,
     },
     {
-        icon: <i className="fa-brands fa-linkedin"></i>,
+        icon: <i className="fa-brands fa-linkedin" style={{ color: 'white' }}></i>,
         label: 'LinkedIn',
-        value: 'linkedin.com/in/yourname',
-        href: 'https://linkedin.com/in/yourname',
-        external: true,
-    },
-    {
-        icon: <i className="fa-brands fa-x-twitter"></i>,
-        label: 'X / Twitter',
-        value: '@yourhandle',
-        href: 'https://x.com/yourhandle',
+        value: 'linkedin.com/in/anshul-karanth-938449278/',
+        href: 'https://www.linkedin.com/in/anshul-karanth-938449278/',
         external: true,
     },
 ];
@@ -52,7 +45,7 @@ export default function Contact() {
                             <div>
                                 <span className="contact__availability-label">Currently available</span>
                                 <span className="contact__availability-sub">
-                                    Open to internships, collaborations, and freelance work
+                                    Open to collaborations and freelance work
                                 </span>
                             </div>
                         </div>

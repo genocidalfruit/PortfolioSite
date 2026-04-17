@@ -92,6 +92,8 @@
     padding: 1.25rem 1.5rem;
     text-decoration: none;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    background: rgba(25, 25, 30, 0.7);
+    border: none;
 }
 
 .contact__link:hover {
