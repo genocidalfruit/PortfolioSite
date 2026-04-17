@@ -50,7 +50,10 @@ export default function AsciiSmoke({ className }) {
     useEffect(() => {
         if (dimensions.width === 0 || dimensions.height === 0) return;
 
-        const cellSize = 16;
+        const isMobile = dimensions.width < 768;
+        const isSmallMobile = dimensions.width < 480;
+        const cellSize = isSmallMobile ? 10 : isMobile ? 12 : 16;
+        const fontSize = isSmallMobile ? 8 : isMobile ? 10 : 14;
         const cols = Math.ceil(dimensions.width / cellSize);
         const rows = Math.ceil(dimensions.height / cellSize);
         
@@ -77,7 +80,6 @@ export default function AsciiSmoke({ className }) {
         let preparedChars = {};
         
         try {
-            const fontSize = 14;
             prepared = prepare('W', `${fontSize}px monospace`);
             
             for (let i = 0; i < ASCII_CHARS.length; i++) {
@@ -188,7 +190,7 @@ export default function AsciiSmoke({ className }) {
             ctx.fillStyle = `rgb(${bgR}, ${bgG}, ${bgB})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = '14px monospace';
+            ctx.font = `${fontSize}px monospace`;
             ctx.textBaseline = 'top';
 
             for (let y = 0; y < rows; y++) {
@@ -209,7 +211,7 @@ export default function AsciiSmoke({ className }) {
                             color = lerpColor(KANAWAGA.accentCyan, KANAWAGA.accentBlue, Math.min(1, (d - 0.75) / 0.25));
                         }
                         
-                        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${Math.min(1, d * 0.7 + 0.4) * 0.15})`;
+                        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${Math.min(1, d * 0.7 + 0.4) * 0.3})`;
                         
                         const px = x * cellSize;
                         const py = y * cellSize;

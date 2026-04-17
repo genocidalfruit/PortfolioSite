@@ -22,20 +22,7 @@ export default function About() {
                             readable as it is performant. I believe in continuous learning,
                             open-source collaboration, and crafting tools that developers love to use.
                         </p>
-                        <div className="about__stats">
-                            <div className="about__stat">
-                                <span className="about__stat-number text-gradient">3+</span>
-                                <span className="about__stat-label">Years Experience</span>
-                            </div>
-                            <div className="about__stat">
-                                <span className="about__stat-number text-gradient">20+</span>
-                                <span className="about__stat-label">Projects Built</span>
-                            </div>
-                            <div className="about__stat">
-                                <span className="about__stat-number text-gradient">10+</span>
-                                <span className="about__stat-label">Technologies</span>
-                            </div>
-                        </div>
+
                     </div>
 
                     <div className="about__terminal">
@@ -51,7 +38,7 @@ export default function About() {
                             <code>
                                 <span className="t-prompt">$</span> cat info.json<br /><br />
                                 <span className="t-brace">{'{'}</span><br />
-                                <span className="t-key">&nbsp;&nbsp;"name"</span>: <span className="t-string">"Your Name"</span>,<br />
+                                <span className="t-key">&nbsp;&nbsp;"name"</span>: <span className="t-string">"Anshul Karanth"</span>,<br />
                                 <span className="t-key">&nbsp;&nbsp;"role"</span>: <span className="t-string">"Full-Stack Dev"</span>,<br />
                                 <span className="t-key">&nbsp;&nbsp;"location"</span>: <span className="t-string">"Earth"</span>,<br />
                                 <span className="t-key">&nbsp;&nbsp;"interests"</span>: [<br />

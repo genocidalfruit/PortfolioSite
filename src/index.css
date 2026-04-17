@@ -286,4 +286,40 @@ a:hover {
   .container {
     padding: 0 1rem;
   }
+
+  .section-title {
+    font-size: clamp(1.4rem, 5vw, 1.75rem);
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 2rem 0;
+  }
+
+  .container {
+    padding: 0 0.75rem;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.5rem;
+  }
 }

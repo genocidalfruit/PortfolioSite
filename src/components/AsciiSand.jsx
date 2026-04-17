@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Coarse, gritty characters that look like grains of sand
-const SAND_CHARS = '`.\',·:;░▒i+x%#@';
+const ASCII_CHARS = ' .·˙`′,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
 
 const PALETTE = {
     bgDark:    [12,  12,  18],
-    dustFaint: [80,  70,  48],
-    sandDark:  [140, 110, 58],
-    sandMid:   [192, 158, 88],
-    sandLight: [228, 200, 130],
-    accentGold:[255, 215, 110],
+    dustFaint: [60,  55,  45],
+    sandDark:  [100, 85,  55],
+    sandMid:   [140, 115, 70],
+    sandLight: [180, 150, 95],
+    accentGold:[210, 175, 100],
 };
 
 function lerp(a, b, t) { return a + (b - a) * t; }
@@ -23,8 +22,8 @@ function lerpColor(c1, c2, t) {
 }
 
 function getChar(density) {
-    const idx = Math.floor(density * (SAND_CHARS.length - 1));
-    return SAND_CHARS[Math.max(0, Math.min(idx, SAND_CHARS.length - 1))];
+    const idx = Math.floor(density * (ASCII_CHARS.length - 1));
+    return ASCII_CHARS[Math.max(0, Math.min(idx, ASCII_CHARS.length - 1))];
 }
 
 export default function AsciiSand({ className }) {
@@ -46,7 +45,10 @@ export default function AsciiSand({ className }) {
     useEffect(() => {
         if (!dimensions.width || !dimensions.height) return;
 
-        const CELL = 16;
+        const isMobile = dimensions.width < 768;
+        const isSmallMobile = dimensions.width < 480;
+        const CELL = isSmallMobile ? 10 : isMobile ? 12 : 16;
+        const fontSize = isSmallMobile ? 8 : isMobile ? 10 : 14;
         const cols = Math.ceil(dimensions.width  / CELL);
         const rows = Math.ceil(dimensions.height / CELL);
 
@@ -217,7 +219,7 @@ export default function AsciiSand({ className }) {
             ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = '14px monospace';
+            ctx.font = `${fontSize}px monospace`;
             ctx.textBaseline = 'top';
 
             for (let y = 0; y < rows; y++) {
@@ -236,7 +238,7 @@ export default function AsciiSand({ className }) {
                     else color = lerpColor(PALETTE.sandLight, PALETTE.accentGold, (d - 0.85) / 0.15);
 
                     // alpha: density-driven base * life fade * 0.15 (set to 15%)
-                    const alpha = (Math.min(1, (d * 0.6 + 0.4)) * Math.min(1, fade * 2)) * 0.15;
+                    const alpha = (Math.min(1, (d * 0.6 + 0.4)) * Math.min(1, fade * 2)) * 0.3;
                     ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha.toFixed(3)})`;
                     ctx.fillText(char, x * CELL, y * CELL);
                 }

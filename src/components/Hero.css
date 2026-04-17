@@ -2,7 +2,7 @@
     min-height: 100dvh;
     display: flex;
     align-items: center;
-    padding: 6rem 0 4rem;
+    padding: 1.5rem 0 4rem;
     position: relative;
     overflow: hidden;
 }
@@ -169,7 +169,7 @@
     border-radius: 8px;
     width: 100%;
     max-width: 1000px;
-    height: 95vh;
+    height: 75vh;
     position: relative;
     overflow: hidden;
 }
@@ -214,18 +214,128 @@
     background: var(--bg-card-hover);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .hero {
-        padding: 5rem 0 3rem;
+        min-height: auto;
+        padding: 8rem 1.5rem 4rem;
     }
 
     .hero__inner {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
+    }
+
+    .hero__content {
+        text-align: center;
+    }
+
+    .hero__greeting {
+        justify-content: center;
+    }
+
+    .hero__role {
+        justify-content: center;
+    }
+
+    .hero__bio {
+        margin: 0 auto 2rem;
     }
 
     .hero__sidebar {
         order: auto;
-        /* Fall back to DOM order, placing it below content */
+        max-width: 420px;
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 7rem 1rem 3rem;
+    }
+
+    .hero__name {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+    }
+
+    .hero__greeting {
+        font-size: 0.95rem;
+    }
+
+    .hero__role {
+        font-size: 1rem;
+    }
+
+    .hero__bio {
+        font-size: 0.82rem;
+        max-width: 100%;
+    }
+
+    .hero__sidebar {
+        max-width: 100%;
+    }
+
+    .hero__card-title {
+        padding: 1rem 1.25rem;
+        font-size: 0.82rem;
+    }
+
+    .hero__card-link {
+        padding: 0.85rem 1.25rem;
+        gap: 0.7rem;
+    }
+
+    .hero__card-link-label {
+        font-size: 0.8rem;
+    }
+
+    .hero__card-link-count {
+        font-size: 0.68rem;
+    }
+
+    .resume-modal {
+        padding: 1rem;
+    }
+
+    .resume-modal__content {
+        height: 85vh;
+        max-width: 100%;
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 6rem 0.75rem 2.5rem;
+    }
+
+    .hero__name {
+        font-size: clamp(1.75rem, 9vw, 2.2rem);
+        margin-bottom: 0.75rem;
+    }
+
+    .hero__greeting {
+        font-size: 0.88rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero__role {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero__bio {
+        font-size: 0.78rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .resume-modal {
+        padding: 0.5rem;
+    }
+
+    .resume-modal__content {
+        height: 90vh;
+        border-radius: 4px;
     }
 }

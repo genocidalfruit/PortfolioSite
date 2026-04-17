@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Wavy, fluid characters that evoke liquid surfaces
-const LIQUID_CHARS = '~-_=≈∿≋^"\'`;:.·╌╍';
+const ASCII_CHARS = ' .·˙`′,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
 
 const PALETTE = {
     bgDark:     [12,  12,  18],
-    depthDark:  [20,  40,  80],
-    waterDeep:  [35,  75,  140],
-    waterMid:   [55,  120, 185],
-    waterLight: [95,  165, 215],
-    accentCyan: [120, 205, 235],
-    foam:       [190, 230, 255],
+    depthDark:  [5, 8, 15],
+    waterDeep:  [8, 18, 35],
+    waterMid:   [15, 30, 50],
+    waterLight: [25, 50, 70],
+    accentCyan: [40, 70, 90],
+    foam:       [60, 80, 100],
 };
 
 function lerp(a, b, t) { return a + (b - a) * t; }
@@ -24,10 +23,9 @@ function lerpColor(c1, c2, t) {
 }
 
 function getChar(density, t, x, y) {
-    // Wave the character index slightly with time for a shimmering effect
     const wave = Math.sin(t * 3 + x * 0.4 - y * 0.2) * 0.08;
-    const idx = Math.floor(Math.min(1, Math.max(0, density + wave)) * (LIQUID_CHARS.length - 1));
-    return LIQUID_CHARS[idx];
+    const idx = Math.floor(Math.min(1, Math.max(0, density + wave)) * (ASCII_CHARS.length - 1));
+    return ASCII_CHARS[idx];
 }
 
 export default function AsciiLiquid({ className }) {
@@ -49,7 +47,10 @@ export default function AsciiLiquid({ className }) {
     useEffect(() => {
         if (!dimensions.width || !dimensions.height) return;
 
-        const CELL = 16;
+        const isMobile = dimensions.width < 768;
+        const isSmallMobile = dimensions.width < 480;
+        const CELL = isSmallMobile ? 10 : isMobile ? 12 : 16;
+        const fontSize = isSmallMobile ? 8 : isMobile ? 10 : 14;
         const cols = Math.ceil(dimensions.width  / CELL);
         const rows = Math.ceil(dimensions.height / CELL);
 
@@ -262,7 +263,7 @@ export default function AsciiLiquid({ className }) {
             ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = '14px monospace';
+            ctx.font = `${fontSize}px monospace`;
             ctx.textBaseline = 'top';
 
             for (let y = 0; y < rows; y++) {
@@ -281,7 +282,7 @@ export default function AsciiLiquid({ className }) {
                     else if (d < 0.88) color = lerpColor(PALETTE.waterLight, PALETTE.accentCyan, (d - 0.7)  / 0.18);
                     else               color = lerpColor(PALETTE.accentCyan, PALETTE.foam,       (d - 0.88) / 0.12);
 
-                    const alpha = (Math.min(1, (d * 0.65 + 0.35)) * Math.min(1, fade * 2)) * 0.15;
+                    const alpha = (Math.min(1, (d * 0.65 + 0.35)) * Math.min(1, fade * 2)) * 0.3;
                     ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha.toFixed(3)})`;
                     ctx.fillText(char, x * CELL, y * CELL);
                 }

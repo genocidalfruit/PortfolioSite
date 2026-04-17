@@ -79,7 +79,6 @@ const STANDALONE = [
         description: 'Distributed security framework using a Generative Transformer to synthesize attack data and solve class imbalance. A central server manages global model training and distributes quantized models to edge nodes for low-latency threat detection.',
         tags: ['PyTorch', 'Python', 'Transformers', 'Scipy', 'Socket Programming'],
         icon: <i className="fa-solid fa-shield-halved"></i>,
-        github: '#',
     },
     {
         title: 'Portfolio Risk Simulator',
@@ -112,14 +111,12 @@ function ProjectCard({ project }) {
             <div className="projects__card-top">
                 <span className="projects__card-icon">{project.icon}</span>
                 <div className="projects__card-actions">
+                    {project.github && (
                     <a href={project.github} className="projects__card-action" aria-label="GitHub">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
                     </a>
-                    {project.link && (
-                        <a href={project.link} className="projects__card-action" aria-label="Live">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
-                        </a>
                     )}
+
                 </div>
             </div>
             <h3 className="projects__card-title">{project.title}</h3>
