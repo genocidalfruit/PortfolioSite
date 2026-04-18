@@ -112,8 +112,13 @@ export default function AsciiSmoke({ className }) {
                 };
             }
         };
-        window.addEventListener('touchmove', handleTouchMove, { passive: true });
-        window.addEventListener('touchstart', handleTouchMove, { passive: true });
+        // Move spawn point off-screen when finger lifts so nothing emits during scroll inertia
+        const handleTouchEnd = () => {
+            mouseRef.current = { x: -999, y: -999 };
+        };
+        window.addEventListener('touchmove',   handleTouchMove, { passive: true });
+        // Do NOT listen to touchstart — it fires at the start of every scroll
+        // gesture and would snap the spawn point to wherever the finger lands.
 
         const update = () => {
             const now = Date.now();
@@ -226,10 +231,14 @@ export default function AsciiSmoke({ className }) {
 
         animationRef.current = requestAnimationFrame(update);
 
+        window.addEventListener('touchend',    handleTouchEnd, { passive: true });
+        window.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('touchmove', handleTouchMove);
-            window.removeEventListener('touchstart', handleTouchMove);
+            window.removeEventListener('mousemove',   handleMouseMove);
+            window.removeEventListener('touchmove',   handleTouchMove);
+            window.removeEventListener('touchend',    handleTouchEnd);
+            window.removeEventListener('touchcancel', handleTouchEnd);
             if (animationRef.current) {
                 cancelAnimationFrame(animationRef.current);
             }

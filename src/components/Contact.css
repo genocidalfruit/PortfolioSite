@@ -19,9 +19,8 @@
     align-items: flex-start;
     gap: 1rem;
     padding: 1.25rem 1.5rem;
-    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    background: var(--bg-surface);
+    background: rgba(22, 22, 29, 0.8);
     margin-bottom: 2rem;
 }
 
@@ -70,6 +69,9 @@
     color: var(--text-muted);
     padding: 1rem 1.25rem;
     border-left: 2px solid var(--border-subtle);
+    background: rgba(22, 22, 29, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .contact__tagline .t-prompt {

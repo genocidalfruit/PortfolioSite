@@ -91,9 +91,14 @@ export default function AsciiLiquid({ className }) {
                 y: (e.touches[0].clientY / dimensions.height) * rows,
             };
         };
+        // Move spawn point off-screen when finger lifts so nothing emits during scroll inertia
+        const onTouchEnd = () => {
+            mouseRef.current = { x: -999, y: -999 };
+        };
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('touchmove',  onTouch, { passive: true });
-        window.addEventListener('touchstart', onTouch, { passive: true });
+        // Do NOT listen to touchstart — it fires at the start of every scroll
+        // gesture and would snap the spawn point to wherever the finger lands.
 
         // ── helper: inject liquid into a cell ──────────────────────────────
         const inject = (x, y, amount, vx = 0) => {
@@ -293,10 +298,14 @@ export default function AsciiLiquid({ className }) {
 
         animRef.current = requestAnimationFrame(update);
 
+        window.addEventListener('touchend',    onTouchEnd, { passive: true });
+        window.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
         return () => {
-            window.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('touchmove',  onTouch);
-            window.removeEventListener('touchstart', onTouch);
+            window.removeEventListener('mousemove',   onMouseMove);
+            window.removeEventListener('touchmove',   onTouch);
+            window.removeEventListener('touchend',    onTouchEnd);
+            window.removeEventListener('touchcancel', onTouchEnd);
             if (animRef.current) cancelAnimationFrame(animRef.current);
         };
     }, [dimensions]);
