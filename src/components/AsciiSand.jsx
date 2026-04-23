@@ -243,7 +243,7 @@ export default function AsciiSand({ className }) {
                     else color = lerpColor(PALETTE.sandLight, PALETTE.accentGold, (d - 0.85) / 0.15);
 
                     // alpha: density-driven base * life fade * 0.15 (set to 15%)
-                    const alpha = (Math.min(1, (d * 0.6 + 0.4)) * Math.min(1, fade * 2)) * 0.3;
+                    const alpha = (Math.min(1, (d * 0.6 + 0.4)) * Math.min(1, fade * 2)) * 0.5;
                     ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha.toFixed(3)})`;
                     ctx.fillText(char, x * CELL, y * CELL);
                 }

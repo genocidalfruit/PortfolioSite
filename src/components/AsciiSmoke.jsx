@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { prepare, layout } from '@chenglou/pretext';
 
-const ASCII_CHARS = ' .·˙`′,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+const ASCII_CHARS = ' .,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
 
 const KANAWAGA = {
     bgDark: [12, 12, 18],
@@ -13,7 +12,7 @@ const KANAWAGA = {
 };
 
 function getChar(density) {
-    const index = Math.floor((1 - density) * (ASCII_CHARS.length - 1));
+    const index = Math.floor(density * (ASCII_CHARS.length - 1));
     return ASCII_CHARS[Math.max(0, Math.min(index, ASCII_CHARS.length - 1))];
 }
 
@@ -32,7 +31,7 @@ function lerpColor(color1, color2, t) {
 export default function AsciiSmoke({ className }) {
     const canvasRef = useRef(null);
     const gridRef = useRef(null);
-    const mouseRef = useRef({ x: 0, y: 0 });
+    const mouseRef = useRef({ x: -999, y: -999 });
     const animationRef = useRef(null);
     const lastTimeRef = useRef(0);
     const timeRef = useRef(0);
@@ -56,8 +55,6 @@ export default function AsciiSmoke({ className }) {
         const fontSize = isSmallMobile ? 8 : isMobile ? 10 : 14;
         const cols = Math.ceil(dimensions.width / cellSize);
         const rows = Math.ceil(dimensions.height / cellSize);
-        
-        mouseRef.current = { x: cols / 2, y: rows * 0.85 };
 
         const grid = [];
         for (let y = 0; y < rows; y++) {
@@ -73,52 +70,24 @@ export default function AsciiSmoke({ className }) {
         canvas.width = dimensions.width;
         canvas.height = dimensions.height;
 
-        ctx.fillStyle = `rgb(${KANAWAGA.bgDark[0]}, ${KANAWAGA.bgDark[1]}, ${KANAWAGA.bgDark[2]})`;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        let prepared = null;
-        let preparedChars = {};
-        
-        try {
-            prepared = prepare('W', `${fontSize}px monospace`);
-            
-            for (let i = 0; i < ASCII_CHARS.length; i++) {
-                const char = ASCII_CHARS[i];
-                const { width } = layout(prepared, cellSize * 2, fontSize);
-                preparedChars[char] = width;
-            }
-        } catch {
-            console.warn('Pretext not available, using canvas fallback');
-        }
-
         const handleMouseMove = (e) => {
-            const scaleX = cols / dimensions.width;
-            const scaleY = rows / dimensions.height;
             mouseRef.current = {
-                x: e.clientX * scaleX,
-                y: e.clientY * scaleY
+                x: e.clientX / cellSize,
+                y: e.clientY / cellSize,
             };
         };
-        window.addEventListener('mousemove', handleMouseMove);
-        
+
         const handleTouchMove = (e) => {
             if (e.touches.length > 0) {
-                const touch = e.touches[0];
-                const scaleX = cols / dimensions.width;
-                const scaleY = rows / dimensions.height;
                 mouseRef.current = {
-                    x: touch.clientX * scaleX,
-                    y: touch.clientY * scaleY
+                    x: e.touches[0].clientX / cellSize,
+                    y: e.touches[0].clientY / cellSize,
                 };
             }
         };
-        // Move spawn point off-screen when finger lifts so nothing emits during scroll inertia
-        const handleTouchEnd = () => {
-            mouseRef.current = { x: -999, y: -999 };
-        };
-        window.addEventListener('touchmove',   handleTouchMove, { passive: true });
-        // Do NOT listen to touchstart — it fires at the start of every scroll
-        // gesture and would snap the spawn point to wherever the finger lands.
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
         const update = () => {
             const now = Date.now();
@@ -127,101 +96,95 @@ export default function AsciiSmoke({ className }) {
                 return;
             }
             lastTimeRef.current = now;
-            
             timeRef.current += 0.01;
+
             const grid = gridRef.current;
             const mouse = mouseRef.current;
             const [bgR, bgG, bgB] = KANAWAGA.bgDark;
 
-            const sourceX = mouse.x;
-            const sourceY = mouse.y;
-            const spread = Math.max(6, cols * 0.15);
+            // --- CIRCULAR CONTINUOUS SPAWN ---
+            if (mouse.x !== -999 && mouse.y !== -999) {
+                const cx = mouse.x;
+                const cy = mouse.y;
+                const spawnRadius = 7.0; // Large circular radius
 
+                // Iterate in a square bounds, but filter by distance
+                for (let dy = -Math.ceil(spawnRadius); dy <= Math.ceil(spawnRadius); dy++) {
+                    for (let dx = -Math.ceil(spawnRadius); dx <= Math.ceil(spawnRadius); dx++) {
+                        const nx = Math.floor(cx + dx);
+                        const ny = Math.floor(cy + dy);
+
+                        if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) continue;
+
+                        // Pythagorean check for circular shape
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance > spawnRadius) continue;
+
+                        const cell = grid[ny][nx];
+
+                        // Radial falloff: Higher intensity at center (1.0), zero at edge (0.0)
+                        const falloff = 1 - (distance / spawnRadius);
+                        const intensity = falloff * 0.45;
+
+                        cell.density = Math.min(2.0, cell.density + intensity * 2);
+
+                        // Upward and outward pressure
+                        cell.vy -= intensity * 0.2;
+                        cell.vx += (dx / spawnRadius) * 0.05 + (Math.random() - 0.5) * 0.1;
+                    }
+                }
+            }
+
+            // --- PHYSICS ---
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     const cell = grid[y][x];
-                    
-                    const dx = x - sourceX;
-                    const dy = y - sourceY;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (dist < spread) {
-                        const intensity = (1 - dist / spread) * 0.5;
-                        cell.density = Math.min(1, cell.density + intensity * 0.15);
-                        
-                        const pushAngle = Math.atan2(dy, dx) + Math.sin(timeRef.current * 0.8 + x * 0.15) * 0.4;
-                        cell.vx += Math.cos(pushAngle) * intensity * 0.03;
-                        cell.vy -= Math.sin(pushAngle) * intensity * 0.025;
+                    if (cell.density < 0.01) {
+                        cell.density = 0;
+                        continue;
                     }
+
+                    // Buoyancy and momentum
+                    cell.vy -= 0.004;
+                    cell.vx *= 0.94;
+                    cell.vy *= 0.94;
+
+                    // Wave-like turbulence
+                    cell.vx += Math.sin(timeRef.current * 2 + y * 0.1) * 0.006;
+
+                    // Advection: Move density to next cell based on velocity
+                    const nextX = Math.floor(x + cell.vx);
+                    const nextY = Math.floor(y + cell.vy);
+
+                    if (nextX >= 0 && nextX < cols && nextY >= 0 && nextY < rows) {
+                        const target = grid[nextY][nextX];
+                        const moveAmount = cell.density * 0.25;
+                        target.density += moveAmount;
+                        cell.density -= moveAmount;
+                    }
+
+                    // Decay to prevent screen clogging
+                    cell.density *= 0.92;
                 }
             }
 
-            for (let y = rows - 2; y >= 0; y--) {
-                for (let x = 0; x < cols; x++) {
-                    const cell = grid[y][x];
-                    
-                    cell.vy -= 0.0006;
-                    cell.vx *= 0.97;
-                    cell.vy *= 0.97;
-                    
-                    const noise = Math.sin(timeRef.current * 2.5 + x * 0.4 + y * 0.3) * 0.003;
-                    cell.vx += noise;
-
-                    if (x > 0 && x < cols - 1) {
-                        const left = grid[y][x - 1];
-                        const right = grid[y][x + 1];
-                        cell.vx += (right.density - left.density) * 0.015;
-                    }
-
-                    let newX = x + cell.vx;
-                    let newY = y + cell.vy;
-                    
-                    newX = Math.max(0, Math.min(cols - 1, newX));
-                    newY = Math.max(0, Math.min(rows - 1, newY));
-                    
-                    const targetCell = grid[Math.floor(newY)][Math.floor(newX)];
-                    
-                    if (y < rows - 1) {
-                        const flow = cell.density * 0.2;
-                        targetCell.density += flow;
-                        cell.density -= flow * 0.5;
-                    }
-
-                    cell.density *= 0.99;
-                }
-            }
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // --- RENDER ---
             ctx.fillStyle = `rgb(${bgR}, ${bgG}, ${bgB})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.font = `${fontSize}px monospace`;
             ctx.textBaseline = 'top';
 
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     const cell = grid[y][x];
-                    if (cell.density > 0.02) {
-                        const char = getChar(cell.density);
-                        const d = cell.density;
-                        
-                        let color;
-                        if (d < 0.2) {
-                            color = lerpColor(KANAWAGA.textMuted, KANAWAGA.textSecondary, d / 0.2);
-                        } else if (d < 0.5) {
-                            color = lerpColor(KANAWAGA.textSecondary, KANAWAGA.textPrimary, (d - 0.2) / 0.3);
-                        } else if (d < 0.75) {
-                            color = lerpColor(KANAWAGA.textPrimary, KANAWAGA.accentCyan, (d - 0.5) / 0.25);
-                        } else {
-                            color = lerpColor(KANAWAGA.accentCyan, KANAWAGA.accentBlue, Math.min(1, (d - 0.75) / 0.25));
-                        }
-                        
-                        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${Math.min(1, d * 0.7 + 0.4) * 0.3})`;
-                        
-                        const px = x * cellSize;
-                        const py = y * cellSize;
-                        
-                        ctx.fillText(char, px, py);
+                    if (cell.density > 0.05) {
+                        const d = Math.min(1, cell.density);
+                        const char = getChar(d);
+
+                        const color = KANAWAGA.textSecondary;
+
+                        ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${Math.min(1, d * 0.6 + 0.4) * 0.5})`;
+                        ctx.fillText(char, x * cellSize, y * cellSize);
                     }
                 }
             }
@@ -231,17 +194,10 @@ export default function AsciiSmoke({ className }) {
 
         animationRef.current = requestAnimationFrame(update);
 
-        window.addEventListener('touchend',    handleTouchEnd, { passive: true });
-        window.addEventListener('touchcancel', handleTouchEnd, { passive: true });
-
         return () => {
-            window.removeEventListener('mousemove',   handleMouseMove);
-            window.removeEventListener('touchmove',   handleTouchMove);
-            window.removeEventListener('touchend',    handleTouchEnd);
-            window.removeEventListener('touchcancel', handleTouchEnd);
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('touchmove', handleTouchMove);
+            if (animationRef.current) cancelAnimationFrame(animationRef.current);
         };
     }, [dimensions]);
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const ASCII_CHARS = ' .·˙`′,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+const ASCII_CHARS = ' .,:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%$';
 
 const PALETTE = {
     bgDark:     [12,  12,  18],
@@ -23,7 +23,7 @@ function lerpColor(c1, c2, t) {
 }
 
 function getChar(density, t, x, y) {
-    const wave = Math.sin(t * 3 + x * 0.4 - y * 0.2) * 0.08;
+    const wave = Math.sin(t * 3.5 + x * 0.5 - y * 0.25) * 0.08;
     const idx = Math.floor(Math.min(1, Math.max(0, density + wave)) * (ASCII_CHARS.length - 1));
     return ASCII_CHARS[idx];
 }
@@ -113,12 +113,12 @@ export default function AsciiLiquid({ className }) {
 
         const update = () => {
             const now = Date.now();
-            if (lastTimeRef.current && now - lastTimeRef.current < 33) {
+            if (lastTimeRef.current && now - lastTimeRef.current < 16) {
                 animRef.current = requestAnimationFrame(update);
                 return;
             }
             lastTimeRef.current = now;
-            timeRef.current += 0.016;
+            timeRef.current += 0.025;
             const t    = timeRef.current;
             const grid = gridRef.current;
             const mx   = mouseRef.current.x;
@@ -161,7 +161,7 @@ export default function AsciiLiquid({ className }) {
                         cell.density -= flow * 0.7;
                     } else {
                         // ── blocked below → diagonal ─────────────────────
-                        const goLeft = cell.vx < 0 || (cell.vx === 0 && Math.sin(t * 13 + x * 7 + y) > 0);
+                        const goLeft = cell.vx < 0 || (cell.vx === 0 && Math.sin(t * 15 + x * 8 + y) > 0);
                         const a = goLeft ? belowLeft : belowRight;
                         const b = goLeft ? belowRight : belowLeft;
 
@@ -287,7 +287,7 @@ export default function AsciiLiquid({ className }) {
                     else if (d < 0.88) color = lerpColor(PALETTE.waterLight, PALETTE.accentCyan, (d - 0.7)  / 0.18);
                     else               color = lerpColor(PALETTE.accentCyan, PALETTE.foam,       (d - 0.88) / 0.12);
 
-                    const alpha = (Math.min(1, (d * 0.65 + 0.35)) * Math.min(1, fade * 2)) * 0.3;
+                    const alpha = (Math.min(1, (d * 0.65 + 0.35)) * Math.min(1, fade * 2)) * 0.5;
                     ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha.toFixed(3)})`;
                     ctx.fillText(char, x * CELL, y * CELL);
                 }

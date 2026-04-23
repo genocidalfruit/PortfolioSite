@@ -1,0 +1,245 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - button "" [ref=e4] [cursor=pointer]:
+      - generic [ref=e5]: 
+    - button "" [ref=e6] [cursor=pointer]:
+      - generic [ref=e7]: 
+    - button "" [ref=e8] [cursor=pointer]:
+      - generic [ref=e9]: 
+  - main [ref=e10]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e16]: 
+          - text: Hello, I'm
+        - heading "Anshul Karanth" [level=1] [ref=e17]
+        - generic [ref=e19]: _
+        - paragraph [ref=e20]: I craft elegant, performant digital experiences with clean code and modern tools. Passionate about developer experience, open source, and building things that matter.
+      - generic [ref=e22]:
+        - heading "Quick Navigation" [level=3] [ref=e23]
+        - generic [ref=e24]:
+          - link " About Who I Am ›" [ref=e25] [cursor=pointer]:
+            - /url: "#about"
+            - generic [ref=e27]: 
+            - generic [ref=e28]:
+              - generic [ref=e29]: About
+              - generic [ref=e30]: Who I Am
+            - generic [ref=e31]: ›
+          - link " Projects Featured Work ›" [ref=e32] [cursor=pointer]:
+            - /url: "#projects"
+            - generic [ref=e34]: 
+            - generic [ref=e35]:
+              - generic [ref=e36]: Projects
+              - generic [ref=e37]: Featured Work
+            - generic [ref=e38]: ›
+          - link " Contact Get in touch ›" [ref=e39] [cursor=pointer]:
+            - /url: "#contact"
+            - generic [ref=e41]: 
+            - generic [ref=e42]:
+              - generic [ref=e43]: Contact
+              - generic [ref=e44]: Get in touch
+            - generic [ref=e45]: ›
+          - button " Resume View Resume ›" [ref=e46] [cursor=pointer]:
+            - generic [ref=e48]: 
+            - generic [ref=e49]:
+              - generic [ref=e50]: Resume
+              - generic [ref=e51]: View Resume
+            - generic [ref=e52]: ›
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - generic [ref=e56]: // about
+        - heading "Who I Am" [level=2] [ref=e57]
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - paragraph [ref=e60]: I'm a full-stack developer with a passion for building clean, efficient, and scalable software. I love turning complex problems into simple, elegant solutions.
+          - paragraph [ref=e61]: With experience spanning front-end interfaces to back-end architectures, I bring ideas to life by writing code that's as readable as it is performant. I believe in continuous learning, open-source collaboration, and crafting tools that developers love to use.
+        - generic [ref=e62]:
+          - generic [ref=e68]: about.sh
+          - code [ref=e70]:
+            - text: $ cat info.json
+            - text: "{"
+            - text: "\"name\": \"Anshul Karanth\","
+            - text: "\"role\": \"Full-Stack Dev\","
+            - text: "\"location\": \"Earth\","
+            - text: "\"interests\": ["
+            - text: "\"Open Source\","
+            - text: "\"System Design\","
+            - text: "\"Creative Coding\""
+            - text: "],"
+            - text: "\"available\": true"
+            - text: "}"
+            - text: $ _
+    - generic [ref=e73]:
+      - generic [ref=e78]: projects — zsh
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e81]: user@portfolio
+          - generic [ref=e82]: :~$
+          - generic [ref=e83]: ls -la projects/
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - button "$ Deep Researcher █" [ref=e86] [cursor=pointer]:
+              - generic [ref=e87]: $
+              - generic [ref=e88]: Deep Researcher
+              - generic [ref=e89]: █
+            - generic [ref=e91]:
+              - paragraph [ref=e92]: "Autonomous multi-agent research system built with LangChain and LangGraph. Takes a natural language query and produces a fully cited, structured research report with no human intervention — powered by four specialized agents: a Manager, Search Agent, Writer Agent, and a Critique Agent that fact-checks claims via live web search before accepting the draft."
+              - link "https://github.com/genocidalfruit/deep-researcher" [ref=e93] [cursor=pointer]:
+                - /url: https://github.com/genocidalfruit/deep-researcher
+                - img [ref=e94]
+                - generic [ref=e96]: https://github.com/genocidalfruit/deep-researcher
+          - generic [ref=e97]:
+            - button "$ Network Intrusion Detection System █" [ref=e98] [cursor=pointer]:
+              - generic [ref=e99]: $
+              - generic [ref=e100]: Network Intrusion Detection System
+              - generic [ref=e101]: █
+            - paragraph [ref=e104]: Distributed security framework using a Generative Transformer to synthesize attack data and solve class imbalance. A central server manages global model training and distributes quantized models to edge nodes for low-latency threat detection.
+          - generic [ref=e105]:
+            - button "$ Portfolio Risk Simulator █" [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]: $
+              - generic [ref=e108]: Portfolio Risk Simulator
+              - generic [ref=e109]: █
+            - generic [ref=e111]:
+              - paragraph [ref=e112]: Quantitative finance tool using stochastic modeling to simulate thousands of market scenarios and calculate portfolio risk metrics like VaR.
+              - link "https://github.com/genocidalfruit/MonteCarlo-Finance" [ref=e113] [cursor=pointer]:
+                - /url: https://github.com/genocidalfruit/MonteCarlo-Finance
+                - img [ref=e114]
+                - generic [ref=e116]: https://github.com/genocidalfruit/MonteCarlo-Finance
+          - generic [ref=e117]:
+            - button "$ Options Pricing Engine █" [ref=e118] [cursor=pointer]:
+              - generic [ref=e119]: $
+              - generic [ref=e120]: Options Pricing Engine
+              - generic [ref=e121]: █
+            - generic [ref=e123]:
+              - paragraph [ref=e124]: Mathematical implementation of the Black-Scholes-Merton formula for European options pricing with Greeks sensitivity analysis.
+              - link "https://github.com/genocidalfruit/BlackScholes" [ref=e125] [cursor=pointer]:
+                - /url: https://github.com/genocidalfruit/BlackScholes
+                - img [ref=e126]
+                - generic [ref=e128]: https://github.com/genocidalfruit/BlackScholes
+        - generic [ref=e130]:
+          - generic [ref=e131]:
+            - button "$ cd vault-ecosystem █" [ref=e132] [cursor=pointer]:
+              - generic [ref=e133]: $
+              - generic [ref=e134]: cd
+              - generic [ref=e135]: vault-ecosystem
+              - generic [ref=e136]: █
+            - generic:
+              - generic:
+                - generic [ref=e137]:
+                  - button "~/./vault-ecosystem$ Automated Knowledge Base █" [ref=e138] [cursor=pointer]:
+                    - generic [ref=e139]: ~/./vault-ecosystem$
+                    - generic [ref=e140]: Automated Knowledge Base
+                    - generic [ref=e141]: █
+                  - generic [ref=e143]:
+                    - paragraph [ref=e144]: A sophisticated PKM system built on Obsidian with automated workflows for metadata integrity, link consistency, and Digital Garden structure.
+                    - link "https://github.com/genocidalfruit/THE-VAULT" [ref=e145] [cursor=pointer]:
+                      - /url: https://github.com/genocidalfruit/THE-VAULT
+                      - img [ref=e146]
+                      - generic [ref=e148]: https://github.com/genocidalfruit/THE-VAULT
+                - generic [ref=e149]:
+                  - button "~/./vault-ecosystem$ Knowledge Base Portal █" [ref=e150] [cursor=pointer]:
+                    - generic [ref=e151]: ~/./vault-ecosystem$
+                    - generic [ref=e152]: Knowledge Base Portal
+                    - generic [ref=e153]: █
+                  - generic [ref=e155]:
+                    - paragraph [ref=e156]: Public-facing frontend that transforms private Markdown notes into a high-performance, SEO-friendly web interface.
+                    - link "https://github.com/genocidalfruit/VAULT-front" [ref=e157] [cursor=pointer]:
+                      - /url: https://github.com/genocidalfruit/VAULT-front
+                      - img [ref=e158]
+                      - generic [ref=e160]: https://github.com/genocidalfruit/VAULT-front
+          - generic [ref=e161]:
+            - button "$ cd cement-site █" [ref=e162] [cursor=pointer]:
+              - generic [ref=e163]: $
+              - generic [ref=e164]: cd
+              - generic [ref=e165]: cement-site
+              - generic [ref=e166]: █
+            - generic:
+              - generic:
+                - generic [ref=e167]:
+                  - button "~/./cement-site$ Commercial Inventory UI █" [ref=e168] [cursor=pointer]:
+                    - generic [ref=e169]: ~/./cement-site$
+                    - generic [ref=e170]: Commercial Inventory UI
+                    - generic [ref=e171]: █
+                  - generic [ref=e173]:
+                    - paragraph [ref=e174]: Frontend for a commercial inventory management system featuring product cataloging, tracking, and dynamic sorting & filtering.
+                    - link "https://github.com/genocidalfruit/cem-site" [ref=e175] [cursor=pointer]:
+                      - /url: https://github.com/genocidalfruit/cem-site
+                      - img [ref=e176]
+                      - generic [ref=e178]: https://github.com/genocidalfruit/cem-site
+                - generic [ref=e179]:
+                  - button "~/./cement-site$ Inventory Backend API █" [ref=e180] [cursor=pointer]:
+                    - generic [ref=e181]: ~/./cement-site$
+                    - generic [ref=e182]: Inventory Backend API
+                    - generic [ref=e183]: █
+                  - generic [ref=e185]:
+                    - paragraph [ref=e186]: Centralized REST API and database layer with secure auth, CRUD operations, and schema design.
+                    - link "https://github.com/genocidalfruit/cem-site-api" [ref=e187] [cursor=pointer]:
+                      - /url: https://github.com/genocidalfruit/cem-site-api
+                      - img [ref=e188]
+                      - generic [ref=e190]: https://github.com/genocidalfruit/cem-site-api
+          - generic [ref=e191]:
+            - button "$ cd ai-resume-suite █" [ref=e192] [cursor=pointer]:
+              - generic [ref=e193]: $
+              - generic [ref=e194]: cd
+              - generic [ref=e195]: ai-resume-suite
+              - generic [ref=e196]: █
+            - generic:
+              - generic:
+                - generic [ref=e197]:
+                  - button "~/./ai-resume-suite$ AI Recruitment Portal █" [ref=e198] [cursor=pointer]:
+                    - generic [ref=e199]: ~/./ai-resume-suite$
+                    - generic [ref=e200]: AI Recruitment Portal
+                    - generic [ref=e201]: █
+                  - generic [ref=e203]:
+                    - paragraph [ref=e204]: User-facing portal with interactive dashboards, resume uploads, and real-time recruiter feedback loops.
+                    - link "https://github.com/genocidalfruit/airesume" [ref=e205] [cursor=pointer]:
+                      - /url: https://github.com/genocidalfruit/airesume
+                      - img [ref=e206]
+                      - generic [ref=e208]: https://github.com/genocidalfruit/airesume
+                - generic [ref=e209]:
+                  - button "~/./ai-resume-suite$ Intelligence Processing Engine █" [ref=e210] [cursor=pointer]:
+                    - generic [ref=e211]: ~/./ai-resume-suite$
+                    - generic [ref=e212]: Intelligence Processing Engine
+                    - generic [ref=e213]: █
+                  - generic [ref=e215]:
+                    - paragraph [ref=e216]: Core AI backend integrating the Gemini API to perform resume parsing, candidate scoring, and recruiter-side analytics.
+                    - link "https://github.com/genocidalfruit/flaskapi" [ref=e217] [cursor=pointer]:
+                      - /url: https://github.com/genocidalfruit/flaskapi
+                      - img [ref=e218]
+                      - generic [ref=e220]: https://github.com/genocidalfruit/flaskapi
+        - generic [ref=e221]:
+          - generic [ref=e222]: $
+          - generic [ref=e223]: echo "more projects at github.com/genocidalfruit"
+    - generic [ref=e225]:
+      - generic [ref=e226]:
+        - generic [ref=e227]: // contact
+        - heading "Get In Touch" [level=2] [ref=e228]
+      - generic [ref=e229]:
+        - generic [ref=e230]:
+          - paragraph [ref=e231]: Have a project in mind, a question, or just want to say hello? I'd love to hear from you — reach out through any of the channels below.
+          - generic [ref=e234]:
+            - generic [ref=e235]: Currently available
+            - generic [ref=e236]: Open to collaborations and freelance work
+          - generic [ref=e237]: $ echo "Let's build something great"
+        - generic [ref=e238]:
+          - link " Email karanthanshul@gmail.com ›" [ref=e239] [cursor=pointer]:
+            - /url: mailto:karanthanshul@gmail.com
+            - generic [ref=e241]: 
+            - generic [ref=e242]:
+              - generic [ref=e243]: Email
+              - generic [ref=e244]: karanthanshul@gmail.com
+            - generic [ref=e245]: ›
+          - link " GitHub github.com/genocidalfruit ›" [ref=e246] [cursor=pointer]:
+            - /url: https://github.com/genocidalfruit
+            - generic [ref=e248]: 
+            - generic [ref=e249]:
+              - generic [ref=e250]: GitHub
+              - generic [ref=e251]: github.com/genocidalfruit
+            - generic [ref=e252]: ›
+          - link " LinkedIn linkedin.com/in/anshul-karanth-938449278/ ›" [ref=e253] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/anshul-karanth-938449278/
+            - generic [ref=e255]: 
+            - generic [ref=e256]:
+              - generic [ref=e257]: LinkedIn
+              - generic [ref=e258]: linkedin.com/in/anshul-karanth-938449278/
+            - generic [ref=e259]: ›
