@@ -1,5 +1,6 @@
 /* ── File Browser Container ─────────────────────────────── */
 .file-browser {
+    position: relative;
     background: rgba(22, 22, 29, 0.25);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -12,9 +13,12 @@
 .file-browser__header {
     display: flex;
     align-items: center;
-    padding: 0.85rem 1.25rem;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
     background: rgba(17, 24, 39, 0.6);
     border-bottom: 1px solid var(--border-subtle);
+    min-height: 44px;
+    box-sizing: border-box;
 }
 
 .file-browser__path {
@@ -43,6 +47,26 @@
     color: var(--text-primary);
 }
 
+.terminal-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: none;
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.terminal-toggle:hover {
+    background: rgba(126, 156, 216, 0.15);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
 .file-browser__current {
     font-size: 0.9rem;
     color: var(--accent-cyan);
@@ -51,15 +75,46 @@
 
 /* ── Grid Content ───────────────────────────────────────── */
 .file-browser__content {
-    padding: 1.5rem;
-    min-height: 320px;
+    position: relative;
+    padding: 0;
+    height: 380px;
     width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ── Animated Content Panels ─────────────────────────── */
+.content-panel {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.content-panel--enter {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.content-panel--exit {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .file-browser__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 1rem;
+    animation: gridFadeIn 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes gridFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Grid Items (folders & files side by side) ─────── */
@@ -130,6 +185,7 @@
     border-top: 1px solid var(--border-subtle);
     background: rgba(17, 24, 39, 0.4);
     min-height: 37px;
+    box-sizing: border-box;
 }
 
 .file-browser__count {
@@ -142,14 +198,14 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding: 1rem;
+    padding: 0.25rem 0 0.5rem;
     width: 100%;
     text-align: left;
-    animation: fadeIn 300ms ease;
+    animation: fadeIn 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -208,6 +264,133 @@
     width: 100%;
 }
 
+/* ── Terminal Container (inline in file-browser) ─── */
+.terminal-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    font-family: var(--font-mono);
+    overflow: hidden;
+}
+
+.terminal-output {
+    flex: 1;
+    padding: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+.terminal-output {
+    flex: 1;
+    padding: 0.25rem 0.25rem 0 0.25rem;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.terminal-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: #a8b3bc;
+    margin-bottom: 0.25rem;
+}
+
+.terminal-line.terminal-input {
+    color: var(--accent-cyan);
+}
+
+.terminal-input-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--border-subtle);
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+.terminal-prompt {
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    margin-right: 0.5rem;
+    white-space: nowrap;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #e6edf3;
+    caret-color: var(--accent-cyan);
+}
+
+/* ── Tab Completion Popup ─────────────────────────── */
+.tab-completions {
+    position: absolute;
+    bottom: 100%;
+    left: 1rem;
+    right: 1rem;
+    max-height: 160px;
+    overflow-y: auto;
+    background: rgba(17, 20, 28, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 0.4rem 0;
+    z-index: 10;
+    animation: completionSlideUp 0.18s ease;
+}
+
+@keyframes completionSlideUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.tab-completions__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #c8d1dc;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.tab-completions__item:hover,
+.tab-completions__item--active {
+    background: rgba(126, 156, 216, 0.12);
+    color: var(--accent-cyan);
+}
+
+.tab-completions__item .comp-icon {
+    font-size: 0.7rem;
+    width: 1rem;
+    text-align: center;
+    opacity: 0.6;
+}
+
+.tab-completions__item .comp-dir {
+    color: #7E9CD8;
+}
+
+.tab-completions__item .comp-file {
+    color: #C8C093;
+}
+
+.tab-completions__item .comp-cmd {
+    color: #98BB6C;
+}
+
 /* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 900px) {
     .file-browser__grid {
@@ -229,7 +412,7 @@
     }
 
     .project-detail {
-        padding: 1.5rem 0.75rem;
+        padding: 0.5rem 0 0.75rem;
     }
 
     .project-detail__icon {
@@ -252,8 +435,7 @@
     }
 
     .file-browser__content {
-        padding: 1.25rem;
-        min-height: 280px;
+        height: 320px;
     }
 
     .file-browser__grid {
@@ -276,7 +458,7 @@
     }
 
     .project-detail {
-        padding: 1rem 0.5rem;
+        padding: 0.5rem 0 0.75rem;
     }
 
     .project-detail__icon {
