@@ -109,6 +109,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 1rem;
+    padding: 1rem;
     animation: gridFadeIn 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -123,7 +124,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.6rem;
-    padding: 1.25rem 0.75rem;
+    padding: 1.25rem 1rem;
     background: none;
     border: 1px solid transparent;
     border-radius: 8px;
@@ -198,7 +199,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding: 0.25rem 0 0.5rem;
+    padding: 1rem;
     width: 100%;
     text-align: left;
     animation: fadeIn 350ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -399,7 +400,7 @@
     }
 
     .file-grid-item {
-        padding: 1rem 0.6rem;
+        padding: 0.85rem;
     }
 
     .file-grid-item__icon {
@@ -444,7 +445,7 @@
     }
 
     .file-grid-item {
-        padding: 0.75rem 0.4rem;
+        padding: 0.75rem;
     }
 
     .file-grid-item__icon {
