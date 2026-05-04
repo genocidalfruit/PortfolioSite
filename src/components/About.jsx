@@ -40,7 +40,7 @@ export default function About() {
                                 <span className="t-brace">{'{'}</span><br />
                                 <span className="t-key">&nbsp;&nbsp;"name"</span>: <span className="t-string">"Anshul Karanth"</span>,<br />
                                 <span className="t-key">&nbsp;&nbsp;"role"</span>: <span className="t-string">"Full-Stack Dev"</span>,<br />
-                                <span className="t-key">&nbsp;&nbsp;"location"</span>: <span className="t-string">"Earth"</span>,<br />
+                              <span className="t-key">&nbsp;&nbsp;"location"</span>: <span className="t-string">"Bangalore, India"</span>,<br />
                                 <span className="t-key">&nbsp;&nbsp;"interests"</span>: [<br />
                                 <span className="t-string">&nbsp;&nbsp;&nbsp;&nbsp;"Open Source"</span>,<br />
                                 <span className="t-string">&nbsp;&nbsp;&nbsp;&nbsp;"System Design"</span>,<br />
